@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PemuCoffee</string>
+
+    <string name="recipes">Recipes</string>
+    <string name="brewing">Brewing</string>
+    <string name="find_shop">Find shop</string>
 </resources>

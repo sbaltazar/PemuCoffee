@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/recipe_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_assignment_white_24dp"
+        android:title="@string/recipes"/>
+
+    <item
+        android:id="@+id/brewing_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_local_drink_white_24dp"
+        android:title="@string/brewing"/>
+
+    <item
+        android:id="@+id/find_shop_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_place_white_24dp"
+        android:title="@string/find_shop"/>
+</menu>

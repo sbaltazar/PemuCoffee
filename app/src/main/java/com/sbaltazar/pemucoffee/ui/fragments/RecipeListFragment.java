@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -62,7 +63,7 @@ public class RecipeListFragment extends Fragment implements RecipeItemAdapter.Re
 
         mBinding = FragmentRecipeListBinding.inflate(inflater, container, false);
 
-        mBinding.rvRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
+        mBinding.rvRecipes.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mBinding.rvRecipes.setItemAnimator(new DefaultItemAnimator());
         mBinding.rvRecipes.setAdapter(mRecipeAdapter);
 

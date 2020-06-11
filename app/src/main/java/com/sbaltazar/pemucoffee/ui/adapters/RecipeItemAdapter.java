@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.sbaltazar.pemucoffee.data.entities.Recipe;
 import com.sbaltazar.pemucoffee.databinding.CardRecipeBinding;
 
@@ -83,6 +84,8 @@ public class RecipeItemAdapter extends RecyclerView.Adapter<RecipeItemAdapter.Re
         void bind(Recipe recipe) {
             if (recipe != null) {
                 mBinding.itemRecipeTitle.setText(recipe.getName());
+                Glide.with(mBinding.itemRecipeImage.getContext())
+                        .load(recipe.getImageUrl()).into(mBinding.itemRecipeImage);
             }
         }
 

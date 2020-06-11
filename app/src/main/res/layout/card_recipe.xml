@@ -6,6 +6,7 @@
     android:layout_height="200dp"
     android:clickable="true"
     android:focusable="true"
+    android:layout_margin="@dimen/cardview_margin"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 

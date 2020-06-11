@@ -4,12 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sbaltazar.pemucoffee.data.Recipe;
+import com.sbaltazar.pemucoffee.data.entities.Recipe;
 import com.sbaltazar.pemucoffee.databinding.CardRecipeBinding;
 
 import java.util.List;

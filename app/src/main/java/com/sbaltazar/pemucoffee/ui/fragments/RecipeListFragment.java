@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -14,8 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.sbaltazar.pemucoffee.R;
-import com.sbaltazar.pemucoffee.data.Recipe;
+import com.sbaltazar.pemucoffee.data.entities.Recipe;
 import com.sbaltazar.pemucoffee.databinding.FragmentRecipeListBinding;
 import com.sbaltazar.pemucoffee.ui.adapters.RecipeItemAdapter;
 
@@ -64,15 +62,6 @@ public class RecipeListFragment extends Fragment implements RecipeItemAdapter.Re
 
         mBinding = FragmentRecipeListBinding.inflate(inflater, container, false);
 
-        List<Recipe> recipes = new ArrayList<>();
-
-        Recipe cappuccino = new Recipe();
-        cappuccino.setName("Cappuccino");
-
-        recipes.add(cappuccino);
-
-        mRecipeAdapter.setRecipes(recipes);
-
         mBinding.rvRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.rvRecipes.setItemAnimator(new DefaultItemAnimator());
         mBinding.rvRecipes.setAdapter(mRecipeAdapter);
@@ -88,9 +77,11 @@ public class RecipeListFragment extends Fragment implements RecipeItemAdapter.Re
 
     @Override
     public void onRecipeClick(View view, int position) {
-
         Recipe recipe = mRecipeAdapter.getRecipe(position);
-
         Toast.makeText(getContext(), recipe.getName(), Toast.LENGTH_SHORT).show();
+    }
+
+    public void setRecipes(List<Recipe> recipes){
+        mRecipeAdapter.setRecipes(recipes);
     }
 }

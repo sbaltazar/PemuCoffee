@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
-import com.sbaltazar.pemucoffee.R;
-import com.sbaltazar.pemucoffee.data.entities.BrewMethod;
 import com.sbaltazar.pemucoffee.data.viewmodels.BrewMethodViewModel;
 import com.sbaltazar.pemucoffee.databinding.ActivityBrewMethodDetailBinding;
 import com.sbaltazar.pemucoffee.ui.fragments.BrewMethodListFragment;
@@ -29,7 +27,7 @@ public class BrewMethodDetailActivity extends AppCompatActivity {
 
         setSupportActionBar(mBinding.toolbarBrewMethod);
 
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 

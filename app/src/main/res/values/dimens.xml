@@ -3,6 +3,9 @@
     <dimen name="recyclerview_margin">4dp</dimen>
     <dimen name="cardview_margin">4dp</dimen>
 
+    <dimen name="activity_margin_side">8dp</dimen>
+    <dimen name="activity_margin_top">8dp</dimen>
+
     <dimen name="appbar_layout_height">300dp</dimen>
     <dimen name="collapsing_toolbar_layout_margin_title_start">48dp</dimen>
     <dimen name="collapsing_toolbar_layout_margin_title_end">64dp</dimen>
@@ -13,5 +16,8 @@
     <dimen name="text_body_margin_start">16dp</dimen>
     <dimen name="text_body_margin_end">@dimen/text_body_margin_start</dimen>
     <dimen name="text_body_margin_top">8dp</dimen>
+
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_size">56dp</dimen>
 
 </resources>

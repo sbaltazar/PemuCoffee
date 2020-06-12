@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.sbaltazar.pemucoffee.data.entities.Recipe;
 import com.sbaltazar.pemucoffee.databinding.FragmentRecipeListBinding;
+import com.sbaltazar.pemucoffee.ui.activities.AddRecipeActivity;
 import com.sbaltazar.pemucoffee.ui.activities.RecipeDetailActivity;
 import com.sbaltazar.pemucoffee.ui.adapters.RecipeItemAdapter;
 
@@ -28,7 +29,8 @@ public class RecipeListFragment extends Fragment implements RecipeItemAdapter.Re
     private RecipeItemAdapter mRecipeAdapter;
     private FragmentRecipeListBinding mBinding;
 
-    public RecipeListFragment() { }
+    public RecipeListFragment() {
+    }
 
     public static RecipeListFragment newInstance() {
         RecipeListFragment fragment = new RecipeListFragment();
@@ -59,6 +61,13 @@ public class RecipeListFragment extends Fragment implements RecipeItemAdapter.Re
         mBinding.rvRecipes.setItemAnimator(new DefaultItemAnimator());
         mBinding.rvRecipes.setAdapter(mRecipeAdapter);
 
+        mBinding.fabAddRecipe.setOnClickListener(v -> {
+            if (getActivity() != null) {
+                Intent intent = new Intent(getActivity(), AddRecipeActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
         return mBinding.getRoot();
     }
 
@@ -81,7 +90,7 @@ public class RecipeListFragment extends Fragment implements RecipeItemAdapter.Re
 
     }
 
-    public void setRecipes(List<Recipe> recipes){
+    public void setRecipes(List<Recipe> recipes) {
         mRecipeAdapter.setRecipes(recipes);
     }
 }

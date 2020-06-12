@@ -10,7 +10,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_layout_recipe"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="@dimen/appbar_layout_height"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
 
@@ -20,8 +20,8 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/colorPrimary"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleMarginEnd="@dimen/collapsing_toolbar_layout_margin_title_end"
+            app:expandedTitleMarginStart="@dimen/collapsing_toolbar_layout_margin_title_start"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:title="@string/app_name">
 
@@ -64,9 +64,9 @@
                 style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="@dimen/text_title_margin_start"
+                android:layout_marginLeft="@dimen/text_title_margin_start"
+                android:layout_marginTop="@dimen/text_title_margin_top"
                 android:text="@string/ingredients"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -75,9 +75,9 @@
                 android:id="@+id/tv_recipe_ingredient_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="@dimen/text_body_margin_start"
+                android:layout_marginLeft="@dimen/text_body_margin_start"
+                android:layout_marginTop="@dimen/text_body_margin_top"
                 app:layout_constraintStart_toStartOf="@id/tv_recipe_ingredient_title"
                 app:layout_constraintTop_toBottomOf="@id/tv_recipe_ingredient_title"
                 tools:text="- Ingredient 1 \n- Ingredient 2" />
@@ -87,9 +87,9 @@
                 style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="@dimen/text_title_margin_start"
+                android:layout_marginLeft="@dimen/text_title_margin_start"
+                android:layout_marginTop="@dimen/text_title_margin_top"
                 android:text="@string/methods"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_recipe_ingredient_list" />
@@ -98,8 +98,10 @@
                 android:id="@+id/tv_recipe_method_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="@dimen/text_body_margin_start"
+                android:layout_marginLeft="@dimen/text_body_margin_start"
+                android:layout_marginEnd="@dimen/text_body_margin_end"
+                android:layout_marginRight="@dimen/text_body_margin_end"
                 app:layout_constraintStart_toStartOf="@id/tv_recipe_method_title"
                 app:layout_constraintTop_toBottomOf="@id/tv_recipe_method_title"
                 tools:text="1-. Step 1 \n2-. Step 2" />

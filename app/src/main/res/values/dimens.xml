@@ -12,5 +12,6 @@
 
     <dimen name="text_body_margin_start">16dp</dimen>
     <dimen name="text_body_margin_end">@dimen/text_body_margin_start</dimen>
+    <dimen name="text_body_margin_top">8dp</dimen>
 
 </resources>

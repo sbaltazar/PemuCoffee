@@ -27,7 +27,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
         setContentView(view);
 
         setSupportActionBar(mBinding.toolbarRecipe);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         if (getIntent() != null && getIntent().hasExtra(RecipeListFragment.EXTRA_RECIPE_ID)) {
             mRecipeId = getIntent().getIntExtra(RecipeListFragment.EXTRA_RECIPE_ID, -1);

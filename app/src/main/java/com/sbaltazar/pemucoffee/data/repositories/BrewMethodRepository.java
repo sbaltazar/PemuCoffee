@@ -37,6 +37,10 @@ public class BrewMethodRepository {
         return mAllBrewMethods;
     }
 
+    public LiveData<BrewMethod> getBrewMethod(int id) {
+        return mDao.getBrewMethod(id);
+    }
+
     public void insertFromApi() {
         new insertFromApiAsyncTask(mApi, mDao).execute();
     }

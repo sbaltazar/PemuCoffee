@@ -27,6 +27,10 @@ public class BrewMethodViewModel extends AndroidViewModel {
         return mAllBrewMethods;
     }
 
+    public LiveData<BrewMethod> getBrewMethod(int id) {
+        return mRepository.getBrewMethod(id);
+    }
+
     public void insertFromApi() {
         mRepository.insertFromApi();
     }

@@ -1,6 +1,7 @@
 package com.sbaltazar.pemucoffee.ui.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +16,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.sbaltazar.pemucoffee.data.entities.BrewMethod;
 import com.sbaltazar.pemucoffee.databinding.FragmentBrewMethodListBinding;
+import com.sbaltazar.pemucoffee.ui.activities.BrewMethodDetailActivity;
 import com.sbaltazar.pemucoffee.ui.adapters.BrewMethodItemAdapter;
 
 import java.util.List;
 
 public class BrewMethodListFragment extends Fragment implements BrewMethodItemAdapter.BrewMethodClickListener {
+
+    public static final String EXTRA_BREW_METHOD_ID = "brew_method_id";
 
     private BrewMethodItemAdapter mBrewMethodAdapter;
     private FragmentBrewMethodListBinding mBinding;
@@ -69,7 +73,13 @@ public class BrewMethodListFragment extends Fragment implements BrewMethodItemAd
     @Override
     public void onBrewMethodClick(View view, int position) {
         BrewMethod brewMethod = mBrewMethodAdapter.getBrewMethod(position);
-        Toast.makeText(getContext(), brewMethod.getName(), Toast.LENGTH_SHORT).show();
+
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), BrewMethodDetailActivity.class);
+            intent.putExtra(EXTRA_BREW_METHOD_ID, brewMethod.getId());
+
+            getActivity().startActivity(intent);
+        }
     }
 
     public void setBrewMethods(List<BrewMethod> brewMethods) {

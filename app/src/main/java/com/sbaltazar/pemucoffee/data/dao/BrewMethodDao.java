@@ -23,7 +23,7 @@ public interface BrewMethodDao {
     void deleteAll();
 
     @Query("SELECT * FROM brew_methods WHERE id = :id")
-    LiveData<List<BrewMethod>> getBrewMethod(int id);
+    LiveData<BrewMethod> getBrewMethod(int id);
 
     @Query("SELECT * FROM brew_methods ORDER BY id ASC")
     LiveData<List<BrewMethod>> getAllBrewMethods();

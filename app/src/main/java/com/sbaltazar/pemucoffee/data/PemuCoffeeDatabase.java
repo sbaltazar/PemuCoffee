@@ -10,19 +10,24 @@ import androidx.room.TypeConverters;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.sbaltazar.pemucoffee.data.dao.BrewMethodDao;
 import com.sbaltazar.pemucoffee.data.dao.RecipeDao;
+import com.sbaltazar.pemucoffee.data.entities.BrewMethod;
 import com.sbaltazar.pemucoffee.data.entities.Recipe;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
-@Database(entities = Recipe.class, version = 1, exportSchema = false)
+@Database(entities = {
+        Recipe.class,
+        BrewMethod.class
+}, version = 2, exportSchema = false)
 @TypeConverters({PemuCoffeeDatabase.Converters.class})
 public abstract class PemuCoffeeDatabase extends RoomDatabase {
 
     //DAOs
     public abstract RecipeDao recipeDao();
+    public abstract BrewMethodDao brewMethodDao();
 
     // Singleton Database
     private static volatile PemuCoffeeDatabase INSTANCE;

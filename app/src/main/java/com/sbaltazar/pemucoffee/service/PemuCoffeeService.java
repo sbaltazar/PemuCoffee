@@ -1,5 +1,6 @@
 package com.sbaltazar.pemucoffee.service;
 
+import com.sbaltazar.pemucoffee.data.raw.BrewMethodRaw;
 import com.sbaltazar.pemucoffee.data.raw.RecipeRaw;
 
 import java.util.List;
@@ -13,5 +14,8 @@ public interface PemuCoffeeService {
 
     @GET("/api/GetRecipe")
     Call<List<RecipeRaw>> getRecipes();
+
+    @GET("/api/GetBrewMethod")
+    Call<List<BrewMethodRaw>> getBrewMethods();
 
 }

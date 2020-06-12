@@ -4,10 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,27 +18,15 @@ import com.sbaltazar.pemucoffee.data.entities.Recipe;
 import com.sbaltazar.pemucoffee.databinding.FragmentRecipeListBinding;
 import com.sbaltazar.pemucoffee.ui.adapters.RecipeItemAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RecipeListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RecipeListFragment extends Fragment implements RecipeItemAdapter.RecipeClickListener {
 
     private RecipeItemAdapter mRecipeAdapter;
     private FragmentRecipeListBinding mBinding;
 
-    public RecipeListFragment() {
-        // Required empty public constructor
-    }
+    public RecipeListFragment() { }
 
-    /**
-     *
-     * @return A new instance of fragment RecipeListFragment.
-     */
     public static RecipeListFragment newInstance() {
         RecipeListFragment fragment = new RecipeListFragment();
         Bundle args = new Bundle();
@@ -58,8 +46,9 @@ public class RecipeListFragment extends Fragment implements RecipeItemAdapter.Re
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
 
         mBinding = FragmentRecipeListBinding.inflate(inflater, container, false);
 

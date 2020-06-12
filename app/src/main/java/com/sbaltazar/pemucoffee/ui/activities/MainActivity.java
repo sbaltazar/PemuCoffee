@@ -13,9 +13,11 @@ import android.widget.Toast;
 
 import com.sbaltazar.pemucoffee.R;
 import com.sbaltazar.pemucoffee.data.raw.RecipeRaw;
+import com.sbaltazar.pemucoffee.data.viewmodels.BrewMethodViewModel;
 import com.sbaltazar.pemucoffee.data.viewmodels.RecipeViewModel;
 import com.sbaltazar.pemucoffee.databinding.ActivityMainBinding;
 import com.sbaltazar.pemucoffee.service.PemuCoffeApi;
+import com.sbaltazar.pemucoffee.ui.fragments.BrewMethodListFragment;
 import com.sbaltazar.pemucoffee.ui.fragments.RecipeListFragment;
 
 import java.io.IOException;
@@ -31,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
     private FragmentManager mFragmentManager;
 
+    // ViewModels
+    private RecipeViewModel mRecipeViewModel;
+    private BrewMethodViewModel mBrewMethodViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,22 +46,45 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
 
         mFragmentManager = getSupportFragmentManager();
+
         RecipeListFragment recipeListFragment = RecipeListFragment.newInstance();
+        BrewMethodListFragment brewMethodListFragment = BrewMethodListFragment.newInstance();
 
         mFragmentManager.beginTransaction()
                 .add(R.id.container, recipeListFragment)
                 .commit();
 
+        mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
+        mBrewMethodViewModel = new ViewModelProvider(this).get(BrewMethodViewModel.class);
+
+        mRecipeViewModel.getAllRecipes().observe(this, recipes -> {
+            if (recipes != null) {
+                recipeListFragment.setRecipes(recipes);
+            }
+        });
+
         mBinding.bottomNavbarView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.recipe_page:
-                    mFragmentManager.beginTransaction().replace(R.id.container, recipeListFragment);
+                    mFragmentManager.beginTransaction().replace(R.id.container, recipeListFragment).commitNow();
+
+                    mRecipeViewModel.getAllRecipes().observe(this, recipes -> {
+                        if (recipes != null) {
+                            recipeListFragment.setRecipes(recipes);
+                        }
+                    });
                     break;
                 case R.id.brewing_page:
-                    mFragmentManager.beginTransaction().replace(R.id.container, recipeListFragment);
+                    mFragmentManager.beginTransaction().replace(R.id.container, brewMethodListFragment).commitNow();
+
+                    mBrewMethodViewModel.getAllBrewMethods().observe(this, brewMethods -> {
+                        if (brewMethods != null) {
+                            brewMethodListFragment.setBrewMethods(brewMethods);
+                        }
+                    });
                     break;
                 case R.id.find_shop_page:
-                    mFragmentManager.beginTransaction().replace(R.id.container, recipeListFragment);
+                    mFragmentManager.beginTransaction().replace(R.id.container, brewMethodListFragment).commitNow();
                     break;
             }
 
@@ -66,20 +95,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void downloadData() {
-        RecipeViewModel recipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
 
-        recipeViewModel.getAllRecipes().observe(this, recipes -> {
+        mRecipeViewModel.getAllRecipes().observe(this, recipes -> {
             if (recipes == null || recipes.isEmpty()) {
-                recipeViewModel.insertFromApi();
-            } else {
-                Fragment currentFragment = mFragmentManager.findFragmentById(R.id.container);
-
-                if (currentFragment instanceof RecipeListFragment) {
-                    ((RecipeListFragment) currentFragment).setRecipes(recipes);
-                }
-
+                mRecipeViewModel.insertFromApi();
             }
         });
+
+        mBrewMethodViewModel.getAllBrewMethods().observe(this, brewMethods -> {
+            if (brewMethods == null || brewMethods.isEmpty()) {
+                mBrewMethodViewModel.insertFromApi();
+            }
+        });
+
+
     }
 
 }

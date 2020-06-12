@@ -96,11 +96,10 @@
 
             <TextView
                 android:id="@+id/tv_recipe_method_list"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintStart_toStartOf="@id/tv_recipe_method_title"
                 app:layout_constraintTop_toBottomOf="@id/tv_recipe_method_title"
                 tools:text="1-. Step 1 \n2-. Step 2" />

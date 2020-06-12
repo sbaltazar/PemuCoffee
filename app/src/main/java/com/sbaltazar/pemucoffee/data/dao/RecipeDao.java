@@ -23,7 +23,7 @@ public interface RecipeDao {
     void deleteAll();
 
     @Query("SELECT * FROM recipes WHERE id = :id")
-    LiveData<List<Recipe>> getRecipe(int id);
+    LiveData<Recipe> getRecipe(int id);
 
     @Query("SELECT * FROM recipes ORDER BY id ASC")
     LiveData<List<Recipe>> getAllRecipes();

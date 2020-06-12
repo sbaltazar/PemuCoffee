@@ -27,6 +27,10 @@ public class RecipeViewModel extends AndroidViewModel {
         return mAllRecipes;
     }
 
+    public LiveData<Recipe> getRecipe(int id){
+        return mRepository.getRecipe(id);
+    }
+
     public void insert(Recipe recipe) {
         mRepository.insert(recipe);
     }

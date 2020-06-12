@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.sbaltazar.pemucoffee.data.entities.Recipe;
 import com.sbaltazar.pemucoffee.databinding.FragmentRecipeListBinding;
@@ -23,6 +22,8 @@ import com.sbaltazar.pemucoffee.ui.adapters.RecipeItemAdapter;
 import java.util.List;
 
 public class RecipeListFragment extends Fragment implements RecipeItemAdapter.RecipeClickListener {
+
+    public static final String EXTRA_RECIPE_ID = "recipe_id";
 
     private RecipeItemAdapter mRecipeAdapter;
     private FragmentRecipeListBinding mBinding;
@@ -69,10 +70,12 @@ public class RecipeListFragment extends Fragment implements RecipeItemAdapter.Re
 
     @Override
     public void onRecipeClick(View view, int position) {
-        //Recipe recipe = mRecipeAdapter.getRecipe(position);
+        Recipe recipe = mRecipeAdapter.getRecipe(position);
 
         if (getActivity() != null) {
             Intent intent = new Intent(getActivity(), RecipeDetailActivity.class);
+            intent.putExtra(EXTRA_RECIPE_ID, recipe.getId());
+
             getActivity().startActivity(intent);
         }
 

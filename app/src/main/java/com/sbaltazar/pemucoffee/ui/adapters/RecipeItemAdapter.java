@@ -79,6 +79,7 @@ public class RecipeItemAdapter extends RecyclerView.Adapter<RecipeItemAdapter.Re
             super(binding.getRoot());
             // View binding for getting UI references
             mBinding = binding;
+            mBinding.getRoot().setOnClickListener(this);
         }
 
         void bind(Recipe recipe) {

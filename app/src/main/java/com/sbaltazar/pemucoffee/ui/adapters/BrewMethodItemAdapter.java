@@ -75,10 +75,11 @@ public class BrewMethodItemAdapter extends RecyclerView.Adapter<BrewMethodItemAd
 
         private final CardBrewMethodBinding mBinding;
 
-        public BrewMethodItemViewHolder(@NonNull CardBrewMethodBinding binding) {
+        BrewMethodItemViewHolder(@NonNull CardBrewMethodBinding binding) {
             super(binding.getRoot());
             // View binding for getting UI references
             mBinding = binding;
+            mBinding.getRoot().setOnClickListener(this);
         }
 
         void bind(BrewMethod brewMethod) {

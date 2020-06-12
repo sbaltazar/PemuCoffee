@@ -1,6 +1,7 @@
 package com.sbaltazar.pemucoffee.ui.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.sbaltazar.pemucoffee.data.entities.Recipe;
 import com.sbaltazar.pemucoffee.databinding.FragmentRecipeListBinding;
+import com.sbaltazar.pemucoffee.ui.activities.RecipeDetailActivity;
 import com.sbaltazar.pemucoffee.ui.adapters.RecipeItemAdapter;
 
 import java.util.List;
@@ -67,8 +69,13 @@ public class RecipeListFragment extends Fragment implements RecipeItemAdapter.Re
 
     @Override
     public void onRecipeClick(View view, int position) {
-        Recipe recipe = mRecipeAdapter.getRecipe(position);
-        Toast.makeText(getContext(), recipe.getName(), Toast.LENGTH_SHORT).show();
+        //Recipe recipe = mRecipeAdapter.getRecipe(position);
+
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), RecipeDetailActivity.class);
+            getActivity().startActivity(intent);
+        }
+
     }
 
     public void setRecipes(List<Recipe> recipes){

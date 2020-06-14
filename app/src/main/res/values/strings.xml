@@ -13,9 +13,10 @@
 
     <string name="a11y_recipe_image">Recipe image</string>
     <string name="a11y_brew_method_image">Brew method image</string>
-
-
+    <string name="a11y_reorder_icon">Reorder icon</string>
+    <string name="a11y_close_icon">Close icon</string>
 
     <string name="hint_name">Name</string>
+    <string name="hint_add_ingredient">Add ingredient</string>
 
 </resources>

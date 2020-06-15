@@ -19,6 +19,8 @@ import com.sbaltazar.pemucoffee.ui.adapters.ReorderItemAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 
 public class AddRecipeActivity extends AppCompatActivity implements ReorderItemAdapter.DragItemListener {
 
@@ -68,9 +70,9 @@ public class AddRecipeActivity extends AppCompatActivity implements ReorderItemA
 
         if (item.getItemId() == R.id.action_add_recipe) {
 
-            List<String> items = mAdapter.getItems();
+            // TODO: Save the ingredients and methods list to the database;
 
-            Toast.makeText(this, mAdapter.getItems().toString() , Toast.LENGTH_LONG).show();
+            Timber.d(mAdapter.getItems().toString());
 
             return true;
         }

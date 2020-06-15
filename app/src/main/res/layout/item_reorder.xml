@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="@string/hint_add_ingredient"
+        android:hint="@string/hint_add_item"
         android:importantForAutofill="no"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"

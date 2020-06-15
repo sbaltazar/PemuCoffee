@@ -19,6 +19,8 @@
     <string name="a11y_close_icon">Close icon</string>
 
     <string name="hint_name">Name</string>
+    <string name="hint_add_item">Add item</string>
     <string name="hint_add_ingredient">Add ingredient</string>
+    <string name="hint_add_method">Add method</string>
 
 </resources>

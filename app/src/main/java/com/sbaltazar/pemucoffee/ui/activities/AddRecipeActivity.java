@@ -10,14 +10,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.sbaltazar.pemucoffee.R;
 import com.sbaltazar.pemucoffee.databinding.ActivityAddRecipeBinding;
 import com.sbaltazar.pemucoffee.ui.adapters.ReorderItemAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import timber.log.Timber;
 
@@ -25,7 +21,8 @@ import timber.log.Timber;
 public class AddRecipeActivity extends AppCompatActivity implements ReorderItemAdapter.DragItemListener {
 
     private ActivityAddRecipeBinding mBinding;
-    private ReorderItemAdapter mAdapter;
+    private ReorderItemAdapter mIngredientAdapter;
+    private ReorderItemAdapter mMethodAdapter;
 
     private ItemTouchHelper mItemTouchHelper;
 
@@ -41,22 +38,17 @@ public class AddRecipeActivity extends AppCompatActivity implements ReorderItemA
             getSupportActionBar().setTitle(R.string.add_new_recipe);
         }
 
-        mAdapter = new ReorderItemAdapter(this, this);
-
-        List<String> ingredients = new ArrayList<>();
-
-//        ingredients.add("Ingredient 1");
-//        ingredients.add("Ingredient 2");
-//        ingredients.add("Ingredient 3");
-//        ingredients.add("Ingredient 4");
+        mIngredientAdapter = new ReorderItemAdapter(this, this, R.string.hint_add_ingredient);
+        mMethodAdapter = new ReorderItemAdapter(this, this, R.string.hint_add_method);
 
         mBinding.rvRecipeIngredients.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.rvRecipeIngredients.setAdapter(mAdapter);
+        mBinding.rvRecipeIngredients.setAdapter(mIngredientAdapter);
 
-        mAdapter.setItems(ingredients);
+        mBinding.rvRecipeMethods.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.rvRecipeMethods.setAdapter(mMethodAdapter);
 
-        initTouchHelper();
-
+        initTouchHelper(mIngredientAdapter, mBinding.rvRecipeIngredients);
+        initTouchHelper(mMethodAdapter, mBinding.rvRecipeMethods);
     }
 
     @Override
@@ -72,7 +64,8 @@ public class AddRecipeActivity extends AppCompatActivity implements ReorderItemA
 
             // TODO: Save the ingredients and methods list to the database;
 
-            Timber.d(mAdapter.getItems().toString());
+            Timber.d(mIngredientAdapter.getItems().toString());
+            Timber.d(mMethodAdapter.getItems().toString());
 
             return true;
         }
@@ -85,7 +78,7 @@ public class AddRecipeActivity extends AppCompatActivity implements ReorderItemA
         mItemTouchHelper.startDrag(viewHolder);
     }
 
-    private void initTouchHelper() {
+    private void initTouchHelper(ReorderItemAdapter adapter, RecyclerView recyclerView) {
 
         mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
             @Override
@@ -94,18 +87,15 @@ public class AddRecipeActivity extends AppCompatActivity implements ReorderItemA
                 final int fromPos = viewHolder.getAdapterPosition();
                 final int toPost = target.getAdapterPosition();
 
-                mAdapter.moveItem(fromPos, toPost);
+                adapter.moveItem(fromPos, toPost);
                 return true;
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-            }
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) { }
         });
 
-        mItemTouchHelper.attachToRecyclerView(mBinding.rvRecipeIngredients);
-
+        mItemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
 }

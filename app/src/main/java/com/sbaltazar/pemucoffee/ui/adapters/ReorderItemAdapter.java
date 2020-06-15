@@ -22,6 +22,7 @@ import java.util.List;
 public class ReorderItemAdapter extends RecyclerView.Adapter<ReorderItemAdapter.ReordenItemViewHolder> {
 
     private final LayoutInflater mInflater;
+    private final int mHintResourceId;
     private List<String> mItems;
 
     final private DragItemListener mDragItemListener;
@@ -30,9 +31,10 @@ public class ReorderItemAdapter extends RecyclerView.Adapter<ReorderItemAdapter.
         void onStartDrag(RecyclerView.ViewHolder viewHolder);
     }
 
-    public ReorderItemAdapter(Context context, DragItemListener listener) {
+    public ReorderItemAdapter(Context context, DragItemListener listener, int hintResourceId) {
         mInflater = LayoutInflater.from(context);
         mDragItemListener = listener;
+        mHintResourceId = hintResourceId;
         mItems = new ArrayList<>();
         mItems.add("");
     }
@@ -104,6 +106,8 @@ public class ReorderItemAdapter extends RecyclerView.Adapter<ReorderItemAdapter.
 
         @SuppressLint("ClickableViewAccessibility")
         void bind(String item) {
+
+            mBinding.etReorderItem.setHint(mHintResourceId);
 
             // If is the last item
             if (getAdapterPosition() == mItems.size() - 1) {

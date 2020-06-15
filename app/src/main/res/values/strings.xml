@@ -5,6 +5,8 @@
     <string name="brewing">Brewing</string>
     <string name="find_shop">Find shop</string>
 
+    <string name="action_add_recipe">Add recipe</string>
+
     <string name="ingredients">Ingredients</string>
     <string name="methods">Methods</string>
     <string name="add_new_recipe">Add new coffee recipe</string>

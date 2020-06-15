@@ -24,7 +24,8 @@ public class AddRecipeActivity extends AppCompatActivity implements ReorderItemA
     private ReorderItemAdapter mIngredientAdapter;
     private ReorderItemAdapter mMethodAdapter;
 
-    private ItemTouchHelper mItemTouchHelper;
+    private ItemTouchHelper mIngredientItemTouchHelper;
+    private ItemTouchHelper mMethodItemTouchHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +48,8 @@ public class AddRecipeActivity extends AppCompatActivity implements ReorderItemA
         mBinding.rvRecipeMethods.setLayoutManager(new LinearLayoutManager(this));
         mBinding.rvRecipeMethods.setAdapter(mMethodAdapter);
 
-        initTouchHelper(mIngredientAdapter, mBinding.rvRecipeIngredients);
-        initTouchHelper(mMethodAdapter, mBinding.rvRecipeMethods);
+        initIngredientTouchHelper();
+        initMethodTouchHelper();
     }
 
     @Override
@@ -75,19 +76,20 @@ public class AddRecipeActivity extends AppCompatActivity implements ReorderItemA
 
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-        mItemTouchHelper.startDrag(viewHolder);
+        mIngredientItemTouchHelper.startDrag(viewHolder);
+        mMethodItemTouchHelper.startDrag(viewHolder);
     }
 
-    private void initTouchHelper(ReorderItemAdapter adapter, RecyclerView recyclerView) {
+    private void initIngredientTouchHelper() {
 
-        mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+        mIngredientItemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
 
                 final int fromPos = viewHolder.getAdapterPosition();
                 final int toPost = target.getAdapterPosition();
 
-                adapter.moveItem(fromPos, toPost);
+                mIngredientAdapter.moveItem(fromPos, toPost);
                 return true;
             }
 
@@ -95,7 +97,27 @@ public class AddRecipeActivity extends AppCompatActivity implements ReorderItemA
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) { }
         });
 
-        mItemTouchHelper.attachToRecyclerView(recyclerView);
+        mIngredientItemTouchHelper.attachToRecyclerView(mBinding.rvRecipeIngredients);
+    }
+
+    private void initMethodTouchHelper() {
+
+        mMethodItemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+
+                final int fromPos = viewHolder.getAdapterPosition();
+                final int toPost = target.getAdapterPosition();
+
+                mMethodAdapter.moveItem(fromPos, toPost);
+                return true;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) { }
+        });
+
+        mMethodItemTouchHelper.attachToRecyclerView(mBinding.rvRecipeMethods);
     }
 
 }

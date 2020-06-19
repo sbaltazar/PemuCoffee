@@ -1,14 +1,17 @@
 package com.sbaltazar.pemucoffee.ui.adapters;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.util.StringUtil;
 
 import com.bumptech.glide.Glide;
+import com.sbaltazar.pemucoffee.R;
 import com.sbaltazar.pemucoffee.data.entities.Recipe;
 import com.sbaltazar.pemucoffee.databinding.CardRecipeBinding;
 
@@ -84,8 +87,16 @@ public class RecipeItemAdapter extends RecyclerView.Adapter<RecipeItemAdapter.Re
         void bind(Recipe recipe) {
             if (recipe != null) {
                 mBinding.itemRecipeTitle.setText(recipe.getName());
-                Glide.with(mBinding.itemRecipeImage.getContext())
-                        .load(recipe.getImageUrl()).into(mBinding.itemRecipeImage);
+
+                if (TextUtils.isEmpty(recipe.getImageUrl())){
+                    Glide.with(mBinding.itemRecipeImage.getContext())
+                            .load(R.drawable.coffee_default).into(mBinding.itemRecipeImage);
+                } else {
+                    Glide.with(mBinding.itemRecipeImage.getContext())
+                            .load(recipe.getImageUrl()).into(mBinding.itemRecipeImage);
+                }
+
+
             }
         }
 

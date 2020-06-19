@@ -23,6 +23,10 @@ public class RecipeViewModel extends AndroidViewModel {
         mAllRecipes = mRepository.getAllRecipes();
     }
 
+    public LiveData<Integer> getLastId() {
+        return mRepository.getLastId();
+    }
+
     public LiveData<List<Recipe>> getAllRecipes(){
         return mAllRecipes;
     }

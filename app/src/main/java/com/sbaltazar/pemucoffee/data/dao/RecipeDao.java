@@ -22,6 +22,9 @@ public interface RecipeDao {
     @Query("DELETE FROM recipes")
     void deleteAll();
 
+    @Query("SELECT IFNULL(id, 0) FROM recipes ORDER BY id DESC LIMIT 1")
+    LiveData<Integer> getLastId();
+
     @Query("SELECT * FROM recipes WHERE id = :id")
     LiveData<Recipe> getRecipe(int id);
 

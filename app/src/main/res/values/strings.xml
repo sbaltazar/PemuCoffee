@@ -23,4 +23,6 @@
     <string name="hint_add_ingredient">Add ingredient</string>
     <string name="hint_add_method">Add method</string>
 
+    <string name="error_no_recipe_name">Please enter a valid recipe name</string>
+
 </resources>

@@ -41,6 +41,10 @@ public class RecipeRepository {
         return mDao.getRecipe(id);
     }
 
+    public LiveData<Integer> getLastId(){
+        return mDao.getLastId();
+    }
+
     public void insert(Recipe recipe) {
         new insertAsyncTask(mDao).execute(recipe);
     }

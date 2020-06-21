@@ -12,6 +12,7 @@ import com.sbaltazar.pemucoffee.data.viewmodels.BrewMethodViewModel;
 import com.sbaltazar.pemucoffee.data.viewmodels.RecipeViewModel;
 import com.sbaltazar.pemucoffee.databinding.ActivityMainBinding;
 import com.sbaltazar.pemucoffee.ui.fragments.BrewMethodListFragment;
+import com.sbaltazar.pemucoffee.ui.fragments.CoffeeMapFragment;
 import com.sbaltazar.pemucoffee.ui.fragments.RecipeListFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecipeListFragment recipeListFragment = RecipeListFragment.newInstance();
         BrewMethodListFragment brewMethodListFragment = BrewMethodListFragment.newInstance();
+        CoffeeMapFragment coffeeMapFragment = CoffeeMapFragment.newInstance();
 
         mFragmentManager.beginTransaction()
                 .add(R.id.container, recipeListFragment)
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     });
                     break;
                 case R.id.find_shop_page:
-                    mFragmentManager.beginTransaction().replace(R.id.container, brewMethodListFragment).commitNow();
+                    mFragmentManager.beginTransaction().replace(R.id.container, coffeeMapFragment).commitNow();
                     break;
             }
 

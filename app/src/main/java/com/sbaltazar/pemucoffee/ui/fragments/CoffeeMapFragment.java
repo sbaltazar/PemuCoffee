@@ -25,10 +25,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.PlaceLikelihood;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.sbaltazar.pemucoffee.BuildConfig;
 import com.sbaltazar.pemucoffee.databinding.FragmentCoffeeMapBinding;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Timer;
 
 import timber.log.Timber;
@@ -50,6 +56,7 @@ public class CoffeeMapFragment extends Fragment implements OnMapReadyCallback {
     private Activity mActivity;
     private FragmentCoffeeMapBinding mBinding;
     private GoogleMap mMap;
+    private PlacesClient mPlacesClient;
 
     private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
     private static final int DEFAULT_ZOOM = 15;
@@ -90,7 +97,7 @@ public class CoffeeMapFragment extends Fragment implements OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState);
 
         Places.initialize(mContext, BuildConfig.PLACES_API_KEY);
-        PlacesClient placesClient = Places.createClient(mContext);
+        mPlacesClient = Places.createClient(mContext);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mContext);
 
@@ -211,6 +218,8 @@ public class CoffeeMapFragment extends Fragment implements OnMapReadyCallback {
                             mMap.getUiSettings().setMyLocationButtonEnabled(false);
                         }
 
+                        showCoffeePlaces();
+
                     }
                 });
 
@@ -218,7 +227,54 @@ public class CoffeeMapFragment extends Fragment implements OnMapReadyCallback {
         } catch (SecurityException e) {
             Timber.e(e, "Error on updating map UI");
         }
+    }
 
+    private void showCoffeePlaces() {
+        if (mMap == null) {
+            return;
+        }
+
+        if (isLocationPermissionGranted) {
+
+            List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME,
+                    Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.TYPES);
+
+            FindCurrentPlaceRequest request = FindCurrentPlaceRequest.newInstance(placeFields);
+
+            Task<FindCurrentPlaceResponse> findCurrentPlaceTask = mPlacesClient.findCurrentPlace(request);
+
+            findCurrentPlaceTask.addOnCompleteListener(response -> {
+                if (response.isSuccessful() && response.getResult() != null) {
+                    FindCurrentPlaceResponse likelyPlaces = response.getResult();
+
+                    for (PlaceLikelihood placeLikelihood : likelyPlaces.getPlaceLikelihoods()) {
+
+                        List<Place.Type> placeTypes = placeLikelihood.getPlace().getTypes();
+
+                        if (placeTypes != null && (placeTypes.contains(Place.Type.CAFE) ||
+                                        placeTypes.contains(Place.Type.FOOD))) {
+                            Timber.d("Place '%s' has likelihood: %f, type: %s",
+                                    placeLikelihood.getPlace().getName(),
+                                    placeLikelihood.getLikelihood(),
+                                    placeLikelihood.getPlace().getTypes().toString());
+
+                            if (placeLikelihood.getPlace().getLatLng() != null) {
+                                LatLng coffeeLatLng = placeLikelihood.getPlace().getLatLng();
+                                String title = placeLikelihood.getPlace().getName();
+                                
+                                mMap.addMarker(new MarkerOptions()
+                                        .title(title)
+                                        .position(coffeeLatLng));
+                            }
+                        }
+                    }
+                } else {
+                    Timber.e(response.getException(), "Error getting the nearby places");
+                }
+            });
+        } else {
+            checkLocationPermission();
+        }
     }
 
     @Override

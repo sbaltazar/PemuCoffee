@@ -5,4 +5,5 @@
     <color name="colorAccent">#08c5d1</color>
 
     <color name="colorTextLight">#fafafa</color>
+    <color name="widgetBgColor">#ffffff</color>
 </resources>

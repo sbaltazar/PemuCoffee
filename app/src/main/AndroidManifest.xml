@@ -18,6 +18,21 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${mapsApiKey}" />
+        <receiver android:name=".ui.widget.PemuCoffeeWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_configuration_info_pemucoffee" />
+        </receiver>
+
+        <activity android:name=".ui.widget.PemuCoffeeWidgetConfiguration">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.activities.AddRecipeActivity"
             android:parentActivityName=".ui.activities.MainActivity" />

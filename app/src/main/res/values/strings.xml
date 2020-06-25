@@ -10,6 +10,7 @@
     <string name="ingredients">Ingredients</string>
     <string name="methods">Methods</string>
     <string name="add_new_recipe">Add new coffee recipe</string>
+    <string name="share_recipe">Share recipe</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

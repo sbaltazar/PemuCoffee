@@ -1,9 +1,13 @@
 package com.sbaltazar.pemucoffee.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -17,6 +21,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private ActivityRecipeDetailBinding mBinding;
 
     private int mRecipeId = 0;
+    private String mRecipeName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
             if (recipe != null) {
                 mBinding.collapsingToolbarRecipe.setTitle(recipe.getName());
 
+                mRecipeName = recipe.getName();
+
                 StringBuilder ingredientList = new StringBuilder();
                 StringBuilder methodList = new StringBuilder();
 
@@ -63,5 +70,34 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 mBinding.tvRecipeMethodList.setText(methodList);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.recipe_detail_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.action_share_recipe) {
+            shareRecipe();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void shareRecipe() {
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, String.format("I love my coffee recipe %s", mRecipeName));
+        sendIntent.setType("text/plain");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
+
     }
 }

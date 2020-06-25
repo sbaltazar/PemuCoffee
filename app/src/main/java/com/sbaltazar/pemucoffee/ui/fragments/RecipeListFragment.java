@@ -87,7 +87,6 @@ public class RecipeListFragment extends Fragment implements RecipeItemAdapter.Re
 
             getActivity().startActivity(intent);
         }
-
     }
 
     public void setRecipes(List<Recipe> recipes) {

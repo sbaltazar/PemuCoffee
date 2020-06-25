@@ -10,6 +10,7 @@ public class PemuCoffeeApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // Adding Timber logging
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }

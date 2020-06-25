@@ -53,7 +53,6 @@ public class BrewMethodDetailActivity extends AppCompatActivity {
                 Glide.with(this).load(brewMethod.getImageUrl()).into(mBinding.toolbarImageBrewMethod);
 
                 mBinding.tvBrewMethodMethodList.setText(methodList);
-
             }
         });
 

@@ -19,6 +19,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Adapter for RecyclerView that handles reordering item by dragging the drag icon. Also allows
+ * adding new elements to it dynamically. Removing also supported
+ */
 public class ReorderItemAdapter extends RecyclerView.Adapter<ReorderItemAdapter.ReordenItemViewHolder> {
 
     private final LayoutInflater mInflater;
@@ -36,6 +40,8 @@ public class ReorderItemAdapter extends RecyclerView.Adapter<ReorderItemAdapter.
         mDragItemListener = listener;
         mHintResourceId = hintResourceId;
         mItems = new ArrayList<>();
+
+        // Adding a blank item to allow the user to type the first element
         mItems.add("");
     }
 
@@ -116,6 +122,7 @@ public class ReorderItemAdapter extends RecyclerView.Adapter<ReorderItemAdapter.
 
                 RecyclerView.ViewHolder viewHolder = this;
 
+                // Text listener to validate that the item has info, avoiding adding empty items.
                 mBinding.etReorderItem.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -131,6 +138,7 @@ public class ReorderItemAdapter extends RecyclerView.Adapter<ReorderItemAdapter.
                             mItems.add("");
                             notifyItemInserted(getAdapterPosition() + 1);
 
+                            // The close button is enabled to delete the item
                             mBinding.icReorder.setImageResource(R.drawable.ic_reorder_gray_800_24dp);
                             mBinding.icClose.setVisibility(View.VISIBLE);
 
@@ -161,17 +169,7 @@ public class ReorderItemAdapter extends RecyclerView.Adapter<ReorderItemAdapter.
                     return false;
                 });
 
-            } else {
-//                mBinding.icReorder.setImageResource(R.drawable.ic_reorder_gray_800_24dp);
-//                mBinding.icClose.setVisibility(View.VISIBLE);
-//                mBinding.etReorderItem.setText(item);
-//
-//                mBinding.icClose.setOnClickListener(v -> {
-//                    mItems.remove(getAdapterPosition());
-//                    notifyItemRemoved(getAdapterPosition());
-//                });
             }
-
         }
     }
 }

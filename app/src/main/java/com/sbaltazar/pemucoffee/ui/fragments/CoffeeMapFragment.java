@@ -35,32 +35,32 @@ import com.sbaltazar.pemucoffee.databinding.FragmentCoffeeMapBinding;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Timer;
 
 import timber.log.Timber;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CoffeeMapFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CoffeeMapFragment extends Fragment implements OnMapReadyCallback {
 
+    // Permission request code
     private static int REQUEST_LOCATION_PERMISSION = 1;
-
+    // Flag for checking location permissions
     private boolean isLocationPermissionGranted;
-    private Location lastKnownLocation;
-    private FusedLocationProviderClient fusedLocationProviderClient;
 
-    private Context mContext;
-    private Activity mActivity;
-    private FragmentCoffeeMapBinding mBinding;
-    private GoogleMap mMap;
+    private Location lastKnownLocation;
+    // Location API provided by Google Play Services
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    // Places API Client
     private PlacesClient mPlacesClient;
 
+    private GoogleMap mMap;
+
+    // Default values for map config when location is not available
     private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
     private static final int DEFAULT_ZOOM = 15;
 
+    // UI/Android Framework references
+    private Context mContext;
+    private Activity mActivity;
+    private FragmentCoffeeMapBinding mBinding;
 
     public CoffeeMapFragment() {
     }
@@ -100,10 +100,14 @@ public class CoffeeMapFragment extends Fragment implements OnMapReadyCallback {
         mPlacesClient = Places.createClient(mContext);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mContext);
-
+        // Getting map to display
         mBinding.mapView.getMapAsync(this);
     }
 
+    /**
+     * Because we are using a MapView instead of MapFragment we need to control the view lifecycle
+     * inside the fragment
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -163,6 +167,7 @@ public class CoffeeMapFragment extends Fragment implements OnMapReadyCallback {
 
     private void checkLocationPermission() {
 
+        // Checking the necessary permissions
         int locationPermission = ContextCompat.checkSelfPermission(mContext,
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
@@ -178,8 +183,8 @@ public class CoffeeMapFragment extends Fragment implements OnMapReadyCallback {
         if (mMap == null) return;
 
         try {
-
             if (isLocationPermissionGranted) {
+                // Show the 'My Location' layer and the button to find the user's location
                 mMap.setMyLocationEnabled(true);
                 mMap.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
@@ -214,15 +219,15 @@ public class CoffeeMapFragment extends Fragment implements OnMapReadyCallback {
                             Timber.d("Current location is null. Using default location");
                             Timber.e(task.getException(), "Task's exception");
 
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation,
+                                    DEFAULT_ZOOM));
                             mMap.getUiSettings().setMyLocationButtonEnabled(false);
                         }
-
+                        // At this moment a position (obtained by the API or default) can be used
+                        // for showing the nearby places that sells coffee
                         showCoffeePlaces();
-
                     }
                 });
-
             }
         } catch (SecurityException e) {
             Timber.e(e, "Error on updating map UI");
@@ -236,21 +241,28 @@ public class CoffeeMapFragment extends Fragment implements OnMapReadyCallback {
 
         if (isLocationPermissionGranted) {
 
+            // Getting the needed projection for request the places info
             List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME,
                     Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.TYPES);
 
             FindCurrentPlaceRequest request = FindCurrentPlaceRequest.newInstance(placeFields);
 
-            Task<FindCurrentPlaceResponse> findCurrentPlaceTask = mPlacesClient.findCurrentPlace(request);
+            // Getting the requestes places
+            Task<FindCurrentPlaceResponse> findCurrentPlaceTask = mPlacesClient
+                    .findCurrentPlace(request);
 
             findCurrentPlaceTask.addOnCompleteListener(response -> {
                 if (response.isSuccessful() && response.getResult() != null) {
+
                     FindCurrentPlaceResponse likelyPlaces = response.getResult();
 
                     for (PlaceLikelihood placeLikelihood : likelyPlaces.getPlaceLikelihoods()) {
 
+                        // Checking the types of the place (Supermarket, coffee shop, pharmacy, etc)
                         List<Place.Type> placeTypes = placeLikelihood.getPlace().getTypes();
 
+                        // By now we are checking only places that are coffee shop or sells food
+                        // (maybe selling coffee)
                         if (placeTypes != null && (placeTypes.contains(Place.Type.CAFE) ||
                                         placeTypes.contains(Place.Type.FOOD))) {
                             Timber.d("Place '%s' has likelihood: %f, type: %s",
@@ -261,9 +273,9 @@ public class CoffeeMapFragment extends Fragment implements OnMapReadyCallback {
                             if (placeLikelihood.getPlace().getLatLng() != null) {
                                 LatLng coffeeLatLng = placeLikelihood.getPlace().getLatLng();
                                 String title = placeLikelihood.getPlace().getName();
-                                
-                                mMap.addMarker(new MarkerOptions()
-                                        .title(title)
+
+                                // Adding a mark to the map to highlight the place
+                                mMap.addMarker(new MarkerOptions().title(title)
                                         .position(coffeeLatLng));
                             }
                         }
@@ -277,6 +289,13 @@ public class CoffeeMapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    /**
+     * Called when user is asked for permissions
+     *
+     * @param requestCode Request code permission. Location code is used by now
+     * @param permissions Requested permissions
+     * @param grantResults The grant result. Can be either GRANTED or DENIED
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,

@@ -32,6 +32,7 @@ public class AddRecipeActivity extends AppCompatActivity implements ReorderItemA
     private ReorderItemAdapter mIngredientAdapter;
     private ReorderItemAdapter mMethodAdapter;
 
+    // Touch helpers for dragging items behaviour
     private ItemTouchHelper mIngredientItemTouchHelper;
     private ItemTouchHelper mMethodItemTouchHelper;
 
@@ -74,12 +75,7 @@ public class AddRecipeActivity extends AppCompatActivity implements ReorderItemA
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.action_add_recipe) {
-
             saveRecipe();
-
-            Timber.d(mIngredientAdapter.getItems().toString());
-            Timber.d(mMethodAdapter.getItems().toString());
-
             return true;
         }
 
@@ -92,6 +88,10 @@ public class AddRecipeActivity extends AppCompatActivity implements ReorderItemA
         mMethodItemTouchHelper.startDrag(viewHolder);
     }
 
+    /**
+     * Touch helper for ingredients RecyclerView. It manages the position of the elements that are
+     * dragged.
+     */
     private void initIngredientTouchHelper() {
 
         mIngredientItemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
@@ -113,6 +113,10 @@ public class AddRecipeActivity extends AppCompatActivity implements ReorderItemA
         mIngredientItemTouchHelper.attachToRecyclerView(mBinding.rvRecipeIngredients);
     }
 
+    /**
+     * Touch helper for methods RecyclerView. It manages the position of the elements that are
+     * dragged.
+     */
     private void initMethodTouchHelper() {
 
         mMethodItemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
@@ -164,6 +168,7 @@ public class AddRecipeActivity extends AppCompatActivity implements ReorderItemA
                 // Removing last method that is an empty string
                 methods.remove(methods.size() - 1);
 
+                // Modeling the entity
                 recipe.setName(recipeName);
                 recipe.setIngredients(ingredients);
                 recipe.setMethods(methods);
@@ -177,8 +182,6 @@ public class AddRecipeActivity extends AppCompatActivity implements ReorderItemA
                 finish();
             }
         });
-
-
     }
 
 }

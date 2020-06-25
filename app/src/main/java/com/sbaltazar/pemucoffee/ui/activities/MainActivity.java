@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
         mBrewMethodViewModel = new ViewModelProvider(this).get(BrewMethodViewModel.class);
 
+        // The first page that the users see is the recipe list, so onCreate we fetch from the db
         mRecipeViewModel.getAllRecipes().observe(this, recipes -> {
             if (recipes != null) {
                 recipeListFragment.setRecipes(recipes);
@@ -83,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
         downloadData();
     }
 
+    /**
+     * Downloads the recipes and method info from the API REST
+     */
     private void downloadData() {
 
         mRecipeViewModel.getAllRecipes().observe(this, recipes -> {

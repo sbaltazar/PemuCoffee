@@ -22,6 +22,7 @@ import java.util.List;
 
 public class BrewMethodListFragment extends Fragment implements BrewMethodItemAdapter.BrewMethodClickListener {
 
+    // Intent TAG to pass the brew method ID
     public static final String EXTRA_BREW_METHOD_ID = "brew_method_id";
 
     private BrewMethodItemAdapter mBrewMethodAdapter;

@@ -14,6 +14,7 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "PLACES_API_KEY", PLACES_API_KEY)
+        manifestPlaceholders.appNameBuildSuffix = ""
         manifestPlaceholders = [mapsApiKey: MAPS_API_KEY]
     }
 
@@ -31,9 +32,13 @@ android {
     productFlavors {
         free {
             applicationId 'com.sbaltazar.pemucoffee.free'
+            manifestPlaceholders = [appNameBuildSuffix: "Free",
+                                    launchActivityName : ".ui.activities.MainActivity"]
         }
         paid {
             applicationId 'com.sbaltazar.pemucoffee.paid'
+            manifestPlaceholders = [appNameBuildSuffix: "",
+                                    launchActivityName : ".ui.activities.MainActivity"]
         }
     }
 

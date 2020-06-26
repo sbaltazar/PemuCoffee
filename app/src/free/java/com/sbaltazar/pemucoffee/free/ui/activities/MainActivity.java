@@ -1,4 +1,4 @@
-package com.sbaltazar.pemucoffee.free.ui.activities;
+package com.sbaltazar.pemucoffee.paid.ui.activities;
 
 import android.os.Bundle;
 import android.view.View;

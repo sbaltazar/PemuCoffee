@@ -1,9 +1,13 @@
-package com.sbaltazar.pemucoffee.ui.activities;
+package com.sbaltazar.pemucoffee.paid.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 
@@ -11,6 +15,7 @@ import com.sbaltazar.pemucoffee.R;
 import com.sbaltazar.pemucoffee.data.viewmodels.BrewMethodViewModel;
 import com.sbaltazar.pemucoffee.data.viewmodels.RecipeViewModel;
 import com.sbaltazar.pemucoffee.databinding.ActivityMainBinding;
+import com.sbaltazar.pemucoffee.ui.dialog.NoInternetDialogFragment;
 import com.sbaltazar.pemucoffee.ui.fragments.BrewMethodListFragment;
 import com.sbaltazar.pemucoffee.ui.fragments.CoffeeMapFragment;
 import com.sbaltazar.pemucoffee.ui.fragments.RecipeListFragment;
@@ -81,7 +86,20 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        downloadData();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (!deviceHasInternet()){
+            NoInternetDialogFragment dialog = new NoInternetDialogFragment();
+            dialog.show(mFragmentManager, "no_internet");
+        } else {
+            downloadData();
+        }
+
     }
 
     /**
@@ -100,6 +118,17 @@ public class MainActivity extends AppCompatActivity {
                 mBrewMethodViewModel.insertFromApi();
             }
         });
+    }
 
+    private boolean deviceHasInternet() {
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (cm != null) {
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+            return networkInfo != null && networkInfo.isConnectedOrConnecting();
+        }
+
+        return false;
     }
 }

@@ -11,13 +11,16 @@
         android:name=".PemuCoffeeApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Pemucoffee ${appNameBuildSuffix}"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${mapsApiKey}" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
         <receiver android:name=".ui.widget.PemuCoffeeWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -35,17 +38,17 @@
         </activity>
         <activity
             android:name=".ui.activities.AddRecipeActivity"
-            android:parentActivityName=".ui.activities.MainActivity" />
+            android:parentActivityName=".paid.ui.activities.MainActivity" />
         <activity
             android:name=".ui.activities.BrewMethodDetailActivity"
-            android:parentActivityName=".ui.activities.MainActivity"
+            android:parentActivityName=".paid.ui.activities.MainActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge" />
         <activity
             android:name=".ui.activities.RecipeDetailActivity"
-            android:parentActivityName=".ui.activities.MainActivity"
+            android:parentActivityName=".paid.ui.activities.MainActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge" />
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name="${launchActivityName}"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -27,5 +27,8 @@
     <string name="hint_add_method">Add method</string>
 
     <string name="error_no_recipe_name">Please enter a valid recipe name</string>
+    <string name="dialog_no_internet_message">The device has no internet connection available. Check your internet connection settings</string>
+    <string name="dialog_button_internet_configuration">Go to configuration</string>
+    <string name="dialog_button_cancel">Cancel</string>
 
 </resources>

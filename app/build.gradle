@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
+    flavorDimensions 'default'
 
     defaultConfig {
         applicationId "com.sbaltazar.pemucoffee"
@@ -27,10 +28,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    productFlavors {
+        free {
+            applicationId 'com.sbaltazar.pemucoffee.free'
+        }
+        paid {
+            applicationId 'com.sbaltazar.pemucoffee.paid'
+        }
+    }
 
     viewBinding.enabled = true
-
-
 }
 
 dependencies {
@@ -63,6 +70,9 @@ dependencies {
 
     // Google Places SDK
     implementation 'com.google.android.libraries.places:places:2.3.0'
+
+    // AdMob (only for free flavour)
+    freeImplementation 'com.google.android.gms:play-services-ads:19.2.0'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
